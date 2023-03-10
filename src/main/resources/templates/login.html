@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>登录/注册</title>
+    <meta charset="UTF-8" http-equiv="Content-Type" content="text/html">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}">
+    <!--    <link rel="stylesheet" th:href="@{/css/bootstrap-theme.css}">-->
+    <link rel="stylesheet" th:href="@{/css/login.css}">
+    <script th:src="@{/webjars/jquery/3.6.3/jquery.js}"></script>
+    <script th:src="@{/js/bootstrap.js}" type="application/javascript"></script>
+
+</head>
+<body>
+<div class="container" id="login-box">
+
+  <div class="form-container sign-up-container">
+    <form>
+      <h1>注册</h1>
+      <div class="txtb">
+        <input type="text">
+        <span data-placeholder="Useranme" ></span>
+      </div>
+      <div class="txtb">
+        <input type="email">
+        <span data-placeholder="Email" ></span>
+      </div>
+      <div class="txtb">
+        <input type="password">
+        <span data-placeholder="Password" ></span>
+      </div>
+      <div class="txtb">
+        <input type="password">
+        <span data-placeholder="Confirm Password" ></span>
+      </div>
+      <button>注册</button>
+    </form>
+  </div>
+  <div class="form-container sign-in-container">
+    <form action="#">
+      <h1>登录</h1>
+      <div class="txtb">
+        <input type="email">
+        <span data-placeholder="Email" ></span>
+      </div>
+      <div class="txtb">
+        <input type="password" >
+        <span data-placeholder="Password"></span>
+      </div>
+      <a href="#">忘记密码？</a>
+      <button>登录</button>
+      <p>--------   其他方式登录   --------</p>
+      <ul class="nav">
+        <li class="nav-item">
+<!--          GitHub登录-->
+          <a href="https://github.com/login/oauth/authorize?client_id=21a057959f6a0ff91f65&redirect_uri=http://localhost:8080/github/callback&scope=user&state=1">
+            <img th:src="@{/img/github-mark.svg}"
+                    height="20px"
+                    width="20px" />
+          </a>
+        </li>
+      </ul>
+    </form>
+  </div>
+
+
+  <div class="overlay-container">
+    <div class="overlay">
+      <div class="overlay-panel overlay-left">
+        <h1>已有账号？</h1>
+        <p>请使用您的账号进行登录</p>
+        <button class="ghost" id="signIn" >登录</button>
+      </div>
+      <div class="overlay-panel overlay-right">
+        <h1>没有账号?</h1>
+        <p>立即注册加入我们，和我们一起开始旅程吧</p>
+        <button class="ghost" id="signUp">注册</button>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+<script>
+  $("#signUp").click(function(){
+    $("#login-box").addClass('right-panel-active')
+  })
+
+  $("#signIn").click(function(){
+    $("#login-box").removeClass('right-panel-active')
+  })
+
+  $(".txtb input").on("focus",function(){
+    $(this).addClass("focus")
+  })
+
+  $(".txtb input").on("blur",function(){
+    if($(this).val() == '')
+      $(this).removeClass("focus")
+  })
+
+</script>
+</body>
+</html>
