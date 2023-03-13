@@ -1,0 +1,19 @@
+body, html{
+    overflow-x: hidden;
+    background-color: rgba(203, 203, 203, 0.44);
+    width: 100%;
+}
+.publish{
+     margin: 50px;
+     background-color: white;
+}
+.btn-publish-submit{
+    margin-bottom: 15px;
+    float: right;
+}
+.publish-child-left{
+    margin-top: 10px;
+}
+.publish-child-right{
+    margin-top: 40px;
+}
