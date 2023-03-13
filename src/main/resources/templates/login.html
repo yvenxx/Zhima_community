@@ -14,18 +14,19 @@
 <div class="container" id="login-box">
 
   <div class="form-container sign-up-container">
-    <form>
+    <form method="post" action="/register">
       <h1>注册</h1>
       <div class="txtb">
-        <input type="text">
+        <span style="color: red">[[${#request.getAttribute('registerInfo')}]]</span>
+        <input type="text" name="userName">
         <span data-placeholder="Useranme" ></span>
       </div>
       <div class="txtb">
-        <input type="email">
+        <input type="email" name="email">
         <span data-placeholder="Email" ></span>
       </div>
       <div class="txtb">
-        <input type="password">
+        <input type="password" name="password">
         <span data-placeholder="Password" ></span>
       </div>
       <div class="txtb">
@@ -35,19 +36,22 @@
       <button>注册</button>
     </form>
   </div>
+
+
   <div class="form-container sign-in-container">
-    <form action="#">
+    <form action="/doLogin" method="post">
       <h1>登录</h1>
       <div class="txtb">
-        <input type="email">
-        <span data-placeholder="Email" ></span>
+        <span style="color: red">[[${#request.getAttribute('info')}]]</span>
+        <input type="text" name="username">
+        <span data-placeholder="UserName" ></span>
       </div>
       <div class="txtb">
-        <input type="password" >
+        <input type="password" name="password" >
         <span data-placeholder="Password"></span>
       </div>
       <a href="#">忘记密码？</a>
-      <button>登录</button>
+      <button type="submit">登录</button>
       <p>--------   其他方式登录   --------</p>
       <ul class="nav">
         <li class="nav-item">
@@ -96,7 +100,6 @@
     if($(this).val() == '')
       $(this).removeClass("focus")
   })
-
 </script>
 </body>
 </html>

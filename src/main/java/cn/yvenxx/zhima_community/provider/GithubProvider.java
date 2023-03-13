@@ -1,7 +1,7 @@
 package cn.yvenxx.zhima_community.provider;
 
 import cn.yvenxx.zhima_community.dto.AccessTokenDTO;
-import cn.yvenxx.zhima_community.dto.User;
+import cn.yvenxx.zhima_community.dto.GithubUser;
 import com.alibaba.fastjson2.JSON;
 import okhttp3.*;
 import org.springframework.stereotype.Component;
@@ -35,7 +35,7 @@ public class GithubProvider {
         return null;
     }
 
-    public User getUser(String accessToken){
+    public GithubUser getUser(String accessToken){
         /**
          * 通过accessToken来获取用户的属性
          */
@@ -47,7 +47,7 @@ public class GithubProvider {
         try{
             Response response = client.newCall(request).execute();
             String string = response.body().string();
-            User gitHubUser = JSON.parseObject(string, User.class);
+            GithubUser gitHubUser = JSON.parseObject(string, GithubUser.class);
             return gitHubUser;
         } catch (IOException e) {
             e.printStackTrace();

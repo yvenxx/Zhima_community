@@ -1,14 +1,17 @@
 package cn.yvenxx.zhima_community.controller;
 
 import cn.yvenxx.zhima_community.dto.AccessTokenDTO;
-import cn.yvenxx.zhima_community.dto.User;
+import cn.yvenxx.zhima_community.dto.GithubUser;
+import cn.yvenxx.zhima_community.model.User;
 import cn.yvenxx.zhima_community.provider.GithubProvider;
+import cn.yvenxx.zhima_community.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
 
 @Controller
 public class AuthorizeController {
@@ -16,19 +19,58 @@ public class AuthorizeController {
     private GithubProvider githubProvider;
     @Autowired
     AccessTokenDTO accessTokenDTO;
+    @Autowired
+    UserServiceImpl userService;
+
     @GetMapping("/github/callback")
     public String gitHubCallback(@RequestParam("code") String code,
                                  @RequestParam("state") String state,
                                  HttpServletRequest request){
+        /**
+         * 需要完善网站的用户信息对接
+         * 对接GitHub登录
+         */
         accessTokenDTO.setCode(code);
         accessTokenDTO.setState(state);
         String accessToken = githubProvider.getAccessToken(accessTokenDTO);
-        User user = githubProvider.getUser(accessToken);
-        if (user != null){
-            request.getSession().setAttribute("user",user);
+        GithubUser githubUser = githubProvider.getUser(accessToken);
+
+        if (githubUser != null){
+            request.getSession().setAttribute("username",githubUser.getName());
             return "redirect:/index";
         }
         return "redirect:/login";
     }
 
+    @RequestMapping("/doLogin")
+    public String loginAuthorize(@RequestParam("username") String username,
+                                 @RequestParam("password") String password,
+                                 HttpServletRequest request){
+
+        if(userService.doLogin(username,password)){
+            request.getSession().setAttribute("username",username);
+
+            return "redirect:/index";
+        }
+        request.setAttribute("info","账号密码错误");
+        return "/login";
+    }
+
+    @PostMapping("/register")
+    public String register(User user,
+                           Model model){
+
+        if(user.getUserName() == null){
+            model.addAttribute("registerInfo","账户名不得为空");
+            return "/login";
+        }
+
+        if(userService.register(user)){
+            model.addAttribute("registerInfo","注册成功");
+            return "/login";
+        }
+
+        model.addAttribute("registerInfo","注册失败");
+        return "/login";
+    }
 }
