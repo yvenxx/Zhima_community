@@ -10,7 +10,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
 @Controller
@@ -27,7 +29,7 @@ public class AuthorizeController {
                                  @RequestParam("state") String state,
                                  HttpServletRequest request){
         /**
-         * 需要完善网站的用户信息对接
+         * 需要完善网站的用户信息对接,token等
          * 对接GitHub登录
          */
         accessTokenDTO.setCode(code);
@@ -45,11 +47,13 @@ public class AuthorizeController {
     @RequestMapping("/doLogin")
     public String loginAuthorize(@RequestParam("username") String username,
                                  @RequestParam("password") String password,
+                                 HttpServletResponse response,
                                  HttpServletRequest request){
 
-        if(userService.doLogin(username,password)){
-            request.getSession().setAttribute("username",username);
-
+        //把token放到cookie，如果token不为空就是登录成功
+        String token = userService.doLogin(username, password);
+        if(token!=null){
+            response.addCookie(new Cookie("token",token));
             return "redirect:/index";
         }
         request.setAttribute("info","账号密码错误");

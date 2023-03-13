@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>知码社区</title>
+    <title>发布 - 知码社区</title>
     <meta charset="UTF-8" http-equiv="Content-Type" content="text/html">
     <link rel="stylesheet" th:href="@{/css/bootstrap.css}">
 <!--    <link rel="stylesheet" th:href="@{/css/bootstrap-theme.css}">-->
@@ -19,7 +19,7 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="#">首页 <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="/">首页 <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#">文章</a>
@@ -49,6 +49,30 @@
         </ul>
     </div>
 </nav>
+
+<!--发布-->
+<div class="container-fluid">
+    <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
+        <h4><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>发布</h4>
+        <hr/>
+        <form action="#">
+            <div class="form-group">
+                <label for="title">标题</label>
+                <input type="text" class="form-control" id="title" name="title">
+            </div>
+            <div class="form-group">
+                <label for="description">Example textarea</label>
+                <textarea class="form-control" id="description" name="description" rows="10"></textarea>
+            </div>
+        </form>
+    </div>
+    <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+        <h6>指南</h6>
+        ● 文章标题
+        ● 文章内容：请勿抄袭
+    </div>
+</div>
+
 
 </body>
 </html>
