@@ -9,6 +9,7 @@ body, html{
 }
 .btn-publish-submit{
     margin-bottom: 15px;
+    width: 100px;
     float: right;
 }
 .publish-child-left{
@@ -16,4 +17,8 @@ body, html{
 }
 .publish-child-right{
     margin-top: 40px;
+}
+.article-card{
+    margin-top: 10px;
+    margin-bottom: 10px;
 }

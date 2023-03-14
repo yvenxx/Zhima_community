@@ -25,13 +25,17 @@ public class HomeController {
             for (Cookie cookie : cookies) {
                 if(cookie.getName().equals("token")){
                     String token = cookie.getValue();
-                    log.info("token{}",token);
                     User user = userService.findUserByToken(token);
-                    log.info(String.valueOf(user));
-                    request.getSession().setAttribute("user",user);
+                    if(user!=null){
+                        request.getSession().setAttribute("user",user);
+                    }
+                    break;
                 }
             }
         }
+
+
+
         return "index";
     }
 
@@ -43,5 +47,4 @@ public class HomeController {
         }
         return "login";
     }
-
 }

@@ -30,10 +30,12 @@
                 <a class="nav-link" href="#">论坛</a>
             </li>
         </ul>
+
         <form class="form-inline">
             <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
         </form>
+
         <ul class="navbar-nav navbar-right ml-4">
             <a class="btn btn-success mx-1" th:href="@{/login}" th:if="${session.user == null}">登录</a>
             <a class="btn btn-info mx-1" th:if="${session.user == null}">注册</a>
@@ -57,31 +59,33 @@
     <div class="row publish">
         <div class="col-lg-7 col-md-12 col-sm-12 col-xs-1 publish-child-left">
             <h4><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>发布</h4>
+            <span style="color: red">[[${error}]]</span>
             <hr/>
-            <form action="#">
+            <form action="/publish" method="post">
                 <div class="form-group">
                     <label for="title">标题</label>
-                    <input type="text" class="form-control" id="title" name="title">
+                    <input type="text" class="form-control" id="title" th:value="${title}" name="title">
                 </div>
                 <div class="form-group">
                     <label for="description">具体内容</label>
-                    <textarea class="form-control" id="description" name="description" placeholder="#MarkDown实时渲染,请在这里输入你的内容"
+                    <textarea class="form-control" id="description" name="description" th:text="${description}" placeholder="#MarkDown实时渲染,请在这里输入你的内容"
                               rows="15" onkeyup="compile()"></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="title">分类</label>
-                    <input type="text" class="form-control" id="sort" name="sort">
                 </div>
 
                 <div class="form-group">
-                    <input type="submit" class="btn btn-success btn-submit btn-publish-submit" value="发布"/>
+                    <label for="title">分类</label>
+                    <input type="text" class="form-control" th:value="${category}" id="category" name="category">
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" id="post-publish" class="btn btn-success btn-submit btn-publish-submit" value="发布"/>
                 </div>
             </form>
         </div>
 
         <div class="col-lg-5 col-md-12 col-sm-12 col-xs-12 publish-child-right">
             <h3>实时渲染</h3>
-            <div id="result" class="border border-primary">
+            <div id="result" class="border border-dark">
 
             </div>
         </div>
