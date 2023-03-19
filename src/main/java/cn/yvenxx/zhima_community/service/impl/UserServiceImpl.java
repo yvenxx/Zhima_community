@@ -51,5 +51,9 @@ public class UserServiceImpl implements UserService {
          */
         return userMapper.getUserByToken(token);
     }
+
+    public User findByUserName(String username){
+        return userMapper.getByUserNameUser(username);
+    }
 }
 

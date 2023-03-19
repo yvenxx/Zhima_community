@@ -22,3 +22,18 @@ body, html{
     margin-top: 10px;
     margin-bottom: 10px;
 }
+#article-preview{
+    text-align:left;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.pagination-total{
+    font-size: 12px;
+    text-align:center;
+    height: 28px;
+    width: 7rem;
+    margin-right: 5px;
+    margin-top: 2px;
+}

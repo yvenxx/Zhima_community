@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="common-head">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}">
+    <link rel="stylesheet" th:href="@{/css/community.css}">
+
+    <script th:src="@{/webjars/jquery/3.6.3/jquery.js}"></script>
+    <script th:src="@{/js/bootstrap.js}" type="application/javascript"></script>
+    <script th:src="@{/js/vue.js}" type="application/javascript"></script>
+    <script th:src="@{/js/axios.min.js}" type="application/javascript"></script>
+</head>
+
+<body>
+<nav th:fragment="topbar" class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="/">知码社区</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="/">首页 <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">文章</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">论坛</a>
+            </li>
+        </ul>
+        <form class="form-inline">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+        <ul class="navbar-nav navbar-right ml-4">
+            <a class="btn btn-success mx-1" th:href="@{/login}" th:if="${session.user == null}">登录</a>
+            <a class="btn btn-info mx-1" th:if="${session.user == null}">注册</a>
+            <li class="nav-item dropdown mr-2" th:if="${session.user != null}">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
+                    [[${session.user.getUserName()}]]
+                </a>
+                <div class="dropdown-menu dropdown-menu-right">
+                    <a class="dropdown-item" href="/publish">发布</a>
+                    <a class="dropdown-item" href="#">个人中心</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="/logout">退出</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+</nav>
+</body>
+</html>

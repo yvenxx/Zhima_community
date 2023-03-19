@@ -1,10 +1,12 @@
 package cn.yvenxx.zhima_community.controller;
 
+import cn.yvenxx.zhima_community.controller.utils.R;
 import cn.yvenxx.zhima_community.dto.AccessTokenDTO;
 import cn.yvenxx.zhima_community.dto.GithubUser;
 import cn.yvenxx.zhima_community.model.User;
 import cn.yvenxx.zhima_community.provider.GithubProvider;
 import cn.yvenxx.zhima_community.service.impl.UserServiceImpl;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,7 +16,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
-
+@Slf4j
 @Controller
 public class AuthorizeController {
     @Autowired
@@ -45,36 +47,39 @@ public class AuthorizeController {
     }
 
     @RequestMapping("/doLogin")
-    public String loginAuthorize(@RequestParam("username") String username,
+    @ResponseBody
+    public R loginAuthorize(@RequestParam("username") String username,
                                  @RequestParam("password") String password,
                                  HttpServletResponse response,
                                  HttpServletRequest request){
 
         //把token放到cookie，如果token不为空就是登录成功
-        String token = userService.doLogin(username, password);
+        String token = userService.doLogin(username,password);
         if(token!=null){
-            response.addCookie(new Cookie("token",token));
-            return "redirect:/index";
+//            response.addCookie(new Cookie("token",token));
+            return R.succ("登录成功",new Cookie("token",token));
         }
-        request.setAttribute("info","账号密码错误");
-        return "/login";
+//        request.setAttribute("info","账号密码错误");
+        return R.fail("登录失败，账号密码错误");
     }
-
+    @ResponseBody
     @PostMapping("/register")
-    public String register(User user,
-                           Model model){
-
-        if(user.getUserName() == null){
-            model.addAttribute("registerInfo","账户名不得为空");
-            return "/login";
+    public R register(User user){
+        log.info(user.toString());
+        if(user.getUserName() == null||user.getPassword()==null||user.getEmail()==null){
+//            model.addAttribute("registerInfo","账户密码和Email不得为空");
+            return R.fail("账户密码和Email不得为空");
         }
-
+        User result = userService.findByUserName(user.getUserName());
+        if (result!=null){
+            return R.fail("此用户已存在，请重试");
+        }
         if(userService.register(user)){
-            model.addAttribute("registerInfo","注册成功");
-            return "/login";
+//            model.addAttribute("registerInfo","注册成功");
+            return R.succ("注册成功，请登录",null);
         }
-
-        model.addAttribute("registerInfo","注册失败");
-        return "/login";
+//        model.addAttribute("registerInfo","注册失败");
+        return R.fail("注册失败，请重试");
     }
+
 }

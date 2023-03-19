@@ -19,3 +19,4 @@ public class Article {
     private String comment;
     private Integer commentCount;
 }
+
