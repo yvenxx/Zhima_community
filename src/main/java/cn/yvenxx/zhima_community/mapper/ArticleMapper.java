@@ -8,7 +8,15 @@ import java.util.List;
 
 @Mapper
 public interface ArticleMapper {
+    List<Article> getArticlesByViewCount();
+
     int insert(Article article);
 
     Page<Article> getAllArticle();
+
+    int getWithinSevenDaysCount(Long milli);
+
+    List<Article> getMixHotArticles();
+
+    List<Article> getWithinSevenDaysHotArticles(long milli);
 }

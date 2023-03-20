@@ -6,6 +6,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.ZoneOffset;
+
 @SpringBootTest
 class ZhimaCommunityApplicationTests {
 
@@ -13,10 +18,8 @@ class ZhimaCommunityApplicationTests {
     StringRedisTemplate redisTemplate;
     @Test
     void contextLoads() {
-        ValueOperations<String, String> ops = redisTemplate.opsForValue();
-        ops.set("hello","world");
-        String s = ops.get("hello");
-        System.out.println(s);
+        long zero = LocalDateTime.of(LocalDate.now(), LocalTime.MIN).toInstant(ZoneOffset.ofHours(8)).toEpochMilli();
+        System.out.println(zero);
     }
 
 }

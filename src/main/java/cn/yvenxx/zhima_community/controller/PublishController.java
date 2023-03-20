@@ -15,7 +15,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
-@Controller
+@RestController
 @Slf4j
 public class PublishController {
 
@@ -25,12 +25,6 @@ public class PublishController {
     @Autowired
     UserServiceImpl userService;
 
-    @GetMapping("/publish")
-    public String publishPage() {
-        return "publish";
-    }
-
-    @ResponseBody
     @PostMapping("/publish")
     public R doPublish(Article article,
                        @RequestParam("token") String token) {

@@ -14,4 +14,20 @@
         select * from article
     </select>
 
+    <select id="getArticlesByViewCount" resultType="cn.yvenxx.zhima_community.model.Article">
+        SELECT * FROM `article` ORDER BY view_count DESC;
+    </select>
+
+    <select id="getWithinSevenDaysCount" resultType="java.lang.Integer">
+        SELECT count(*) FROM `article` where gmt_create >= ${milli};
+    </select>
+
+    <select id="getMixHotArticles" resultType="cn.yvenxx.zhima_community.model.Article">
+        SELECT * FROM `article` ORDER BY gmt_create desc,view_count desc  LIMIT 5;
+    </select>
+
+    <select id="getWithinSevenDaysHotArticles" resultType="cn.yvenxx.zhima_community.model.Article">
+        SELECT * FROM `article` where gmt_create >= ${milli} ORDER BY view_count desc;
+    </select>
+
 </mapper>

@@ -10,5 +10,8 @@ public interface ArticleService {
 
     public void publishAtricle(Article article);
 
-    PageInfo<Article> getPages(int currentPage);
+    PageInfo<Article> getMixLatestArticles(int currentPage);
+
+    List<Article> getMixHotArticles();
+
 }
