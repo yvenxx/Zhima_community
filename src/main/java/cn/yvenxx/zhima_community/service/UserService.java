@@ -7,4 +7,6 @@ public interface UserService{
 
     String doLogin(String username, String password);
     boolean register(User user);
+
+    User getUserById(int id);
 }

@@ -16,15 +16,28 @@ public class ArticlesController {
     @Autowired
     ArticleServiceImpl articleService;
 
+    @RequestMapping("/article/{id}")
+    public R articleDetail(@PathVariable("id")int id){
+        Article articleDetail = articleService.getArticleDetail(id);
+        return R.succ(articleDetail);
+    }
 
-    @RequestMapping("/index/latestArticles/{currentPage}")
-    public R mixLatestArticlePage(@PathVariable("currentPage") int currentPage){
+    @RequestMapping("/index/{category}/{sort}/{currentPage}")
+    public R mixLatestArticlePage(@PathVariable("category")String category,
+                                  @PathVariable("sort")String sort,
+                                  @PathVariable("currentPage") int currentPage){
         /*
           获得综合栏目的最新文章
          */
-        PageInfo<Article> allArticle = articleService.getMixLatestArticles(currentPage);
-//        log.info(allArticle.toString());
-        return R.succ(allArticle);
+        if (sort.equals("latest")){
+            PageInfo<Article> allArticle = articleService.getLatestArticlesByCategory(category,currentPage);
+            return R.succ(allArticle);
+        }
+        else if (sort.equals("recommend")){
+            PageInfo<Article> allArticle = articleService.getRecommendArticlesByCategory(category,currentPage);
+            return R.succ(allArticle);
+        }
+        return R.fail("fail");
     }
 
     @RequestMapping("/index/hotArticles")

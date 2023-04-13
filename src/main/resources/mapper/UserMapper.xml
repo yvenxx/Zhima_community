@@ -26,5 +26,8 @@
     <select id="getUserByToken" resultType="cn.yvenxx.zhima_community.model.User">
         select * from user where token = #{token};
     </select>
+    <select id="getUserById" resultType="cn.yvenxx.zhima_community.model.User">
+        select * from `user` where id = #{id}
+    </select>
 
 </mapper>

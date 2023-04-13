@@ -28,13 +28,28 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public PageInfo<Article> getMixLatestArticles(int currentPage) {
+    public PageInfo<Article> getLatestArticlesByCategory(String category,int currentPage) {
         /*
             获得最新的文章
          */
         PageHelper.startPage(currentPage,5,"gmt_create desc");
-        PageInfo<Article> list = new PageInfo<>(articleMapper.getAllArticle());
+        PageInfo<Article> list = new PageInfo<>(articleMapper.getAllByCategoryArticle(category));
         return list;
+    }
+
+    @Override
+    public PageInfo<Article> getRecommendArticlesByCategory(String category, int currentPage) {
+        /*
+            获得推荐的文章，暂时没写推荐算法
+         */
+        PageHelper.startPage(currentPage,5,"gmt_create desc");
+        PageInfo<Article> list = new PageInfo<>(articleMapper.getAllByCategoryArticle(category));
+        return list;
+    }
+
+    @Override
+    public Article getArticleDetail(int id) {
+        return articleMapper.getArticleByid(id);
     }
 
     @Override
@@ -49,4 +64,6 @@ public class ArticleServiceImpl implements ArticleService {
         }
         return articleMapper.getMixHotArticles();
     }
+
+
 }

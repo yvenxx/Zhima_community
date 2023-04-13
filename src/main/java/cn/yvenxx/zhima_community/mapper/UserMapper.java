@@ -12,4 +12,6 @@ public interface UserMapper{
     boolean update(User user);
 
     User getUserByToken(@Param("token") String token);
+
+    User getUserById(int id);
 }

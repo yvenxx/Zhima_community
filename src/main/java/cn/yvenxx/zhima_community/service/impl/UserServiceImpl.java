@@ -45,6 +45,11 @@ public class UserServiceImpl implements UserService {
         return false;
     }
 
+    @Override
+    public User getUserById(int id) {
+        return userMapper.getUserById(id);
+    }
+
     public User findUserByToken(String token){
         /**
          * 登录成功后，通过cookie中的token来返回用户数据，存储到session中

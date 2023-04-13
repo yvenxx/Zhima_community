@@ -12,11 +12,13 @@ public interface ArticleMapper {
 
     int insert(Article article);
 
-    Page<Article> getAllArticle();
+    Page<Article> getAllByCategoryArticle(String category);
 
     int getWithinSevenDaysCount(Long milli);
 
     List<Article> getMixHotArticles();
 
     List<Article> getWithinSevenDaysHotArticles(long milli);
+
+    Article getArticleByid(int id);
 }

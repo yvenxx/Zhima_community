@@ -11,7 +11,6 @@ import java.io.IOException;
 @Component
 public class GithubProvider {
 
-
     public String getAccessToken(AccessTokenDTO accessTokenDTO){
         /**
          * 获取AccessToken

@@ -10,8 +10,11 @@ public interface ArticleService {
 
     public void publishAtricle(Article article);
 
-    PageInfo<Article> getMixLatestArticles(int currentPage);
+    PageInfo<Article> getLatestArticlesByCategory(String category,int currentPage);
 
     List<Article> getMixHotArticles();
 
+    PageInfo<Article> getRecommendArticlesByCategory(String category, int currentPage);
+
+    Article getArticleDetail(int id);
 }
