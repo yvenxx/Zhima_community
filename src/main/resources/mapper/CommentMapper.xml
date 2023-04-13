@@ -4,5 +4,15 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="cn.yvenxx.zhima_community.mapper.CommentMapper">
+    <insert id="comment">
+        insert into comment(username,user_id,content,create_time,blog_id,parent_id,target)
+        values (#{username},#{userId},#{content},#{createTime},#{blogId},#{parentId},#{target})
+    </insert>
 
+    <select id="getCommentByBlogId" resultType="cn.yvenxx.zhima_community.model.Comment">
+        select * from `comment` where blog_id = #{blogId}
+    </select>
+    <select id="getCountByBlogIdAndParentId" resultType="java.lang.Integer">
+        select count(id) from `comment` where blog_id = #{blogId} and parent_id is null
+    </select>
 </mapper>

@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface ArticleService {
 
-    public void publishAtricle(Article article);
+    void publishAtricle(Article article);
 
     PageInfo<Article> getLatestArticlesByCategory(String category,int currentPage);
 
