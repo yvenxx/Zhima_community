@@ -38,21 +38,65 @@ public class LikeRedisServiceImpl implements LikeRedisService {
     }
 
     @Override
-    public void saveLikedToRedis(String articleId, String likeUserId) {
+    public void saveLikedToRedisAndIncrementCount(String articleId, String likeUserId) {
+
         String key = RedisKeyUtils.getLikedKey(articleId, likeUserId);
         // 封装value 喜欢状态 更新时间
         HashMap<String,Object> map = new HashMap<>();
-        //点赞状态置为1
+
+        //判断是否已经点过 点过了就不能继续加
+        HashMap<String,Object> userMap = (HashMap<String, Object>) redisHash.get(RedisKeyUtils.MAP_KEY_USER_LIKED,RedisKeyUtils.getLikedKey(articleId,likeUserId));
+        if (userMap!=null){
+            Integer status = (Integer) userMap.get("status");
+            if (status!=1){
+                Integer articleCount = (Integer) redisHash.get(RedisKeyUtils.MAP_KEY_USER_LIKED_COUNT, articleId);
+                if (articleCount!=null){
+                    // 点赞数+1
+                    redisHash.increment(RedisKeyUtils.MAP_KEY_USER_LIKED_COUNT, articleId, 1);
+                }
+                else {
+                    redisHash.put(RedisKeyUtils.MAP_KEY_USER_LIKED_COUNT,articleId,1);
+                }
+            }
+        }else {
+            Integer articleCount = (Integer) redisHash.get(RedisKeyUtils.MAP_KEY_USER_LIKED_COUNT, articleId);
+            if (articleCount!=null){
+                // 点赞数+1
+                redisHash.increment(RedisKeyUtils.MAP_KEY_USER_LIKED_COUNT, articleId, 1);
+            }
+            else {
+                redisHash.put(RedisKeyUtils.MAP_KEY_USER_LIKED_COUNT,articleId,1);
+            }
+        }
+
+        // 点赞状态置为1
         map.put("status",1);
         map.put("updateTime", System.currentTimeMillis());
-
         redisHash.put(RedisKeyUtils.MAP_KEY_USER_LIKED, key, map);
+
     }
 
     @Override
     public void unlikeFromRedis(String articleId, String likeUserId) {
         // 生成key
         String key = RedisKeyUtils.getLikedKey(articleId, likeUserId);
+
+        //判断是否已经点过 点过了就不能继续加
+        HashMap<String,Object> userMap = (HashMap<String, Object>) redisHash.get(RedisKeyUtils.MAP_KEY_USER_LIKED,RedisKeyUtils.getLikedKey(articleId,likeUserId));
+        if (userMap!=null){
+            Integer status = (Integer) userMap.get("status");
+            if (status!=0){
+                Integer articleCount = (Integer) redisHash.get(RedisKeyUtils.MAP_KEY_USER_LIKED_COUNT, articleId);
+                if (articleCount!=null){
+                    // 点赞数+1
+                    redisHash.increment(RedisKeyUtils.MAP_KEY_USER_LIKED_COUNT, articleId, -1);
+                }
+                else {
+                    redisHash.put(RedisKeyUtils.MAP_KEY_USER_LIKED_COUNT,articleId,0);
+                }
+            }
+        }
+
         // 封装value 喜欢状态 更新时间
         HashMap<String,Object> map = new HashMap<>();
         map.put("status",0);
@@ -65,11 +109,6 @@ public class LikeRedisServiceImpl implements LikeRedisService {
     public void deleteLikedFromRedis(String articleId, String likeUserId) {
         String key = RedisKeyUtils.getLikedKey(articleId, likeUserId);
         redisHash.delete(RedisKeyUtils.MAP_KEY_USER_LIKED, key);
-    }
-
-    @Override
-    public void decrementLikedCount(String articleId, Integer num) {
-        redisHash.increment(RedisKeyUtils.MAP_KEY_USER_LIKED_COUNT, articleId, num);
     }
 
     @Override

@@ -19,7 +19,7 @@ public interface LikeRedisService {
      * @param articleId
      * @param likeUserId
      */
-    void saveLikedToRedis(String articleId,String likeUserId);
+    void saveLikedToRedisAndIncrementCount(String articleId,String likeUserId);
 
     /**
      * 取消点赞 状态变为0
@@ -35,12 +35,6 @@ public interface LikeRedisService {
      */
     void deleteLikedFromRedis(String articleId,String likeUserId);
 
-    /**
-     * 点赞数量 变化num
-     * @param articleId
-     * @param num
-     */
-    void decrementLikedCount(String articleId,Integer num);
 
     /**
      * 获取redis中存储的所有点赞数量
