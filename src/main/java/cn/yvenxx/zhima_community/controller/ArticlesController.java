@@ -1,6 +1,6 @@
 package cn.yvenxx.zhima_community.controller;
 
-import cn.yvenxx.zhima_community.controller.utils.R;
+import cn.yvenxx.zhima_community.utils.R;
 import cn.yvenxx.zhima_community.model.Article;
 import cn.yvenxx.zhima_community.service.impl.ArticleServiceImpl;
 import com.github.pagehelper.PageInfo;

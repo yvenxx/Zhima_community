@@ -1,6 +1,6 @@
 package cn.yvenxx.zhima_community.controller;
 
-import cn.yvenxx.zhima_community.controller.utils.R;
+import cn.yvenxx.zhima_community.utils.R;
 import cn.yvenxx.zhima_community.model.User;
 import cn.yvenxx.zhima_community.service.impl.UserServiceImpl;
 import lombok.extern.slf4j.Slf4j;

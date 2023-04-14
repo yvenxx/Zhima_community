@@ -1,4 +1,4 @@
-package cn.yvenxx.zhima_community.controller.utils;
+package cn.yvenxx.zhima_community.utils;
 
 import lombok.Data;
 

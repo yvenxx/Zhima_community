@@ -1,6 +1,6 @@
 package cn.yvenxx.zhima_community.controller;
 
-import cn.yvenxx.zhima_community.controller.utils.R;
+import cn.yvenxx.zhima_community.utils.R;
 import cn.yvenxx.zhima_community.dto.AccessTokenDTO;
 import cn.yvenxx.zhima_community.dto.GithubUser;
 import cn.yvenxx.zhima_community.model.User;
@@ -9,13 +9,12 @@ import cn.yvenxx.zhima_community.service.impl.UserServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Map;
+
 @Slf4j
 @Controller
 public class AuthorizeController {

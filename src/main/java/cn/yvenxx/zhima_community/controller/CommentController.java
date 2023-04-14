@@ -1,6 +1,6 @@
 package cn.yvenxx.zhima_community.controller;
 
-import cn.yvenxx.zhima_community.controller.utils.R;
+import cn.yvenxx.zhima_community.utils.R;
 import cn.yvenxx.zhima_community.model.Comment;
 import cn.yvenxx.zhima_community.service.CommentService;
 import com.github.pagehelper.PageInfo;
