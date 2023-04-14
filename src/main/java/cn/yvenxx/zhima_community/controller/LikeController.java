@@ -1,6 +1,7 @@
 package cn.yvenxx.zhima_community.controller;
 
 import cn.yvenxx.zhima_community.service.LikeRedisService;
+import cn.yvenxx.zhima_community.service.UserLikesService;
 import cn.yvenxx.zhima_community.utils.R;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class LikeController {
     @Autowired
     private LikeRedisService likeRedisService;
+    @Autowired
+    private UserLikesService userLikesService;
 
     @PostMapping("like")
     public R likeInfo(String articleId,String userId){

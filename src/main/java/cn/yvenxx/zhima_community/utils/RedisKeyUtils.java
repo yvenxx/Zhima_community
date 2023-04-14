@@ -10,6 +10,8 @@ public class RedisKeyUtils {
      */
     public static final String MAP_KEY_USER_LIKED_COUNT = "MAP_USER_LIKED_COUNT";
 
+    public static final String MAP_KEY_ARTICLE_VISITS="MAP_KEY_ARTICLE_VISITS";
+
     /**
      * 拼接被点赞的内容id和点赞的人的id作为key。格式 222222::333333
      * @param articleId
@@ -21,4 +23,9 @@ public class RedisKeyUtils {
                 "::" +
                 likeUserId;
     }
+
+    public static String getArticleVisits(String articleId){
+        return articleId;
+    }
+
 }

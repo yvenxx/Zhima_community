@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.yvenxx.zhima_community.mapper.UserLikesMapper">
+    <insert id="insert">
+        insert into user_likes(article_id,user_id,status,gmt_create,gmt_modified)
+        values(#{articleId},#{userId},#{status},#{gmtCreate},#{gmtModified})
+    </insert>
+    <update id="update">
+        UPDATE user_likes SET status=#{status}, gmt_create=#{gmtCreate}
+            where id = #{id}
+    </update>
+
+    <select id="getAll" resultType="cn.yvenxx.zhima_community.model.UserLikes">
+        select * from `user_likes`
+    </select>
+    <select id="selectAllByArticleId" resultType="cn.yvenxx.zhima_community.model.UserLikes">
+        select * from user_likes where article_id = #{articleId}
+    </select>
+    <select id="selectAllByUserId" resultType="cn.yvenxx.zhima_community.model.UserLikes">
+        select * from user_likes where user_id = #{likeUserId}
+    </select>
+
+<!--    param1 articleid   param2 userId-->
+    <select id="selectByUserIdAndArticleId" resultType="cn.yvenxx.zhima_community.model.UserLikes">
+        select  * from user_likes
+                  where article_id = #{param1} and user_id = #{param2}
+    </select>
+
+</mapper>

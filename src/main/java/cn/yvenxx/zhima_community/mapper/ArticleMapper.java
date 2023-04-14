@@ -21,4 +21,6 @@ public interface ArticleMapper {
     List<Article> getWithinSevenDaysHotArticles(long milli);
 
     Article getArticleByid(int id);
+
+    int update(Article article);
 }

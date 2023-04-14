@@ -1,6 +1,5 @@
 package cn.yvenxx.zhima_community.model;
 
-import javafx.beans.DefaultProperty;
 import lombok.Data;
 import org.springframework.stereotype.Component;
 
@@ -16,7 +15,7 @@ public class Article {
     private Integer creator;
     private Integer viewCount;
     private Integer likeCount;
-    private String comment;
     private Integer commentCount;
+
 }
 
