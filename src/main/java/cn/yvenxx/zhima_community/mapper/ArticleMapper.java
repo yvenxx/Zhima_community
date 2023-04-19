@@ -23,4 +23,6 @@ public interface ArticleMapper {
     Article getArticleByid(int id);
 
     int update(Article article);
+
+    int updateCount(Integer blogId, int count);
 }

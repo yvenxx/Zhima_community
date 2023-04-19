@@ -4,6 +4,9 @@ import cn.yvenxx.zhima_community.model.UserLikes;
 import com.github.pagehelper.Page;
 
 public interface UserLikesService {
+
+    UserLikes getLikeStatus(String articleId,String userId);
+
     /**
      * 保存点赞记录
      * @param userLike

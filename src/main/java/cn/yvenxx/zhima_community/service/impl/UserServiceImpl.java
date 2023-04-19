@@ -3,13 +3,23 @@ package cn.yvenxx.zhima_community.service.impl;
 import cn.yvenxx.zhima_community.mapper.UserMapper;
 import cn.yvenxx.zhima_community.model.User;
 import cn.yvenxx.zhima_community.service.UserService;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Service
-public class UserServiceImpl implements UserService {
+@Slf4j
+@AllArgsConstructor
+public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Autowired
     UserMapper userMapper;
@@ -59,6 +69,21 @@ public class UserServiceImpl implements UserService {
 
     public User findByUserName(String username){
         return userMapper.getByUserNameUser(username);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        if (username==null||"".equals(username)){
+            throw new RuntimeException("不能为空");
+        }
+        User user = userMapper.getByUserNameUser(username);
+        if (user==null){
+            throw new UsernameNotFoundException("用户不存在");
+        }
+        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+        authorities.add(new SimpleGrantedAuthority("ROLE_"+user.getRole()));
+        //暂时是未加密的
+        return new org.springframework.security.core.userdetails.User(user.getUserName(),"{noop}"+user.getPassword(),authorities);
     }
 }
 

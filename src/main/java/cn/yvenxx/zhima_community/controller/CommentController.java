@@ -1,5 +1,6 @@
 package cn.yvenxx.zhima_community.controller;
 
+import cn.yvenxx.zhima_community.service.ArticleService;
 import cn.yvenxx.zhima_community.utils.R;
 import cn.yvenxx.zhima_community.model.Comment;
 import cn.yvenxx.zhima_community.service.CommentService;
@@ -21,6 +22,8 @@ import java.util.stream.Collectors;
 public class CommentController {
     @Autowired
     CommentService commentService;
+    @Autowired
+    ArticleService articleService;
 
     @GetMapping("/comment/{blogid}/{currentPage}")
     public R getComment(@PathVariable("blogid")int blogId,@PathVariable("currentPage") int currentPage){
@@ -45,12 +48,11 @@ public class CommentController {
         //设置total
         int count = commentService.getCountByBlogId(blogId);
         comment.setTotal(count);
-        log.info(count+"----------------");
+
         //设置pages
         count = count/20;
         count=count+count%20==0?0:1;
         comment.setPages(count);
-        log.info(count+"----------------");
 
         comment.setList(rootComment);
         return R.succ(comment);
@@ -60,9 +62,13 @@ public class CommentController {
     public R comment(Comment comment){
         comment.setCreateTime(LocalDateTime.now());
         int i = commentService.comment(comment);
+        int count = commentService.getCountByBlogId(comment.getBlogId());
+        articleService.updateCommentCount(comment.getBlogId(),count);
+
         if (i==1){
             return R.succ(null);
         }
+
         return R.fail("插入失败");
     }
 }

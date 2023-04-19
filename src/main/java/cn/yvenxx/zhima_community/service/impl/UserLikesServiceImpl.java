@@ -12,7 +12,6 @@ import cn.yvenxx.zhima_community.service.UserLikesService;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -29,6 +28,13 @@ public class UserLikesServiceImpl implements UserLikesService {
 
     @Autowired
     LikeRedisService likeRedisService;
+
+
+    @Override
+    public UserLikes getLikeStatus(String articleId, String userId) {
+        UserLikes userLikes = userLikesMapper.selectByUserIdAndArticleId(articleId, userId);
+        return userLikes;
+    }
 
     @Override
     public Boolean save(UserLikes userLike) {
@@ -92,17 +98,20 @@ public class UserLikesServiceImpl implements UserLikesService {
                 // 判断数据库中点赞状态与缓存中点赞状态一致性
                 if (userLikes.getStatus()==item.getStatus()){
                     // 一致，无需持久化，点赞数量-1
-//                    likeRedisService.in_decrementLikedCount(item.getInfoId(), -1);
+                    likeRedisService.decrementLikedCount(item.getArticleId(), -1);
                 }else{// 不一致
                     if (userLikes.getStatus()== 1){// 在数据库中已经是点赞，则取消点赞，同时记得redis中的count-1
                         // 之前是点赞，现在改为取消点赞
                         // 1.设置更改status
-                        // 2. 修改mysql与redis一致
+                        // 2. count-1
                         userLikes.setStatus(0);
-                        update(userLikes);
+//                        update(userLikes);
+                        likeRedisService.decrementLikedCount(item.getArticleId(), -1);
+
                     } else if (userLikes.getStatus()== 0) {// 未点赞，则点赞，修改点赞状态和点赞数据+1
                         userLikes.setStatus(1);
-                        update(userLikes);
+                        likeRedisService.decrementLikedCount(item.getArticleId(), -1);
+//                        update(userLikes);
                     }
                     userLikes.setGmtModified(System.currentTimeMillis());
                     if(!update(userLikes)){// 更新点赞数据
@@ -143,8 +152,10 @@ public class UserLikesServiceImpl implements UserLikesService {
 
     private UserLikes userLikesDTOtoUserLikes(UserLikesDTO userLikesDTO){
         UserLikes userLikes = new UserLikes();
-//        userLikes.setId(sid.nextShort());
-        BeanUtils.copyProperties(userLikesDTO,userLikes);
+
+        userLikes.setStatus(userLikesDTO.getStatus());
+        userLikes.setUserId(userLikesDTO.getLikeUserId());
+        userLikes.setArticleId(userLikesDTO.getArticleId());
         userLikes.setGmtCreate(System.currentTimeMillis());
         userLikes.setGmtModified(userLikes.getGmtCreate());
         return userLikes;

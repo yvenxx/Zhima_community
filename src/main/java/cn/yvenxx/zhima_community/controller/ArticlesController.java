@@ -1,5 +1,6 @@
 package cn.yvenxx.zhima_community.controller;
 
+import cn.yvenxx.zhima_community.service.LikeRedisService;
 import cn.yvenxx.zhima_community.utils.R;
 import cn.yvenxx.zhima_community.model.Article;
 import cn.yvenxx.zhima_community.service.impl.ArticleServiceImpl;
@@ -15,15 +16,19 @@ import org.springframework.web.bind.annotation.RestController;
 public class ArticlesController {
     @Autowired
     ArticleServiceImpl articleService;
+    @Autowired
+    LikeRedisService redisService;
 
     @RequestMapping("/article/{id}")
     public R articleDetail(@PathVariable("id")int id){
         Article articleDetail = articleService.getArticleDetail(id);
+        //缓存like to redis
+        redisService.insertLikeCount(articleDetail.getAid(),articleDetail.getLikeCount());
         return R.succ(articleDetail);
     }
 
     @RequestMapping("/index/{category}/{sort}/{currentPage}")
-    public R mixLatestArticlePage(@PathVariable("category")String category,
+    public R latestArticlePage(@PathVariable("category")String category,
                                   @PathVariable("sort")String sort,
                                   @PathVariable("currentPage") int currentPage){
         /*
@@ -41,7 +46,7 @@ public class ArticlesController {
     }
 
     @RequestMapping("/index/hotArticles")
-    public R mixHotArticles(){
+    public R hotArticles(){
         return R.succ(articleService.getMixHotArticles());
     }
 

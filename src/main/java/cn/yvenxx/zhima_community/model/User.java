@@ -1,7 +1,6 @@
 package cn.yvenxx.zhima_community.model;
 
 import lombok.Data;
-import org.jetbrains.annotations.PropertyKey;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -9,7 +8,7 @@ import org.springframework.stereotype.Component;
 public class User {
 
     private Integer id;
-    private Integer accountId;
+    private String role;
     private String userName;
     private String password;
     private String email;

@@ -1,5 +1,6 @@
 package cn.yvenxx.zhima_community.controller;
 
+import cn.yvenxx.zhima_community.utils.JwtTokenUtil;
 import cn.yvenxx.zhima_community.utils.R;
 import cn.yvenxx.zhima_community.model.Article;
 import cn.yvenxx.zhima_community.model.User;
@@ -8,6 +9,8 @@ import cn.yvenxx.zhima_community.service.impl.UserServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @Slf4j
@@ -21,11 +24,12 @@ public class PublishController {
 
     @PostMapping("/publish")
     public R doPublish(Article article,
-                       @RequestParam("token") String token) {
+                       HttpServletRequest request) {
         log.info(article.toString());
+        String token = request.getHeader("Authorization").replace(JwtTokenUtil.TOKEN_PREFIX, "");
+        String username = JwtTokenUtil.getUsername(token);
         User user = null;
-
-        user = userService.findUserByToken(token);
+        user = userService.findByUserName(username);
         log.info("======token:"+token);
         log.info("======user:"+user);
 

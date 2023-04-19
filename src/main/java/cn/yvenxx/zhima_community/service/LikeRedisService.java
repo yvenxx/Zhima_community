@@ -6,6 +6,23 @@ import cn.yvenxx.zhima_community.dto.UserLikesDTO;
 import java.util.List;
 
 public interface LikeRedisService {
+    void decrementLikedCount(String articleId,int delta);
+    /**
+     * 缓存这个用户对于这个文章的点赞状态
+     *
+     * @param articleId
+     * @param userId
+     * @param status
+     */
+    void insertLike(String articleId, String userId, Integer status);
+
+    /**
+     * 缓存文章的点赞数
+     * @param aid
+     * @param likeCount
+     */
+    void insertLikeCount(Integer aid, Integer likeCount);
+
     /**
      * 获取点赞状态
      * @param articleId
@@ -43,4 +60,5 @@ public interface LikeRedisService {
     List<UserLikeCountDTO> getLikedCountFromRedis();
 
     List<UserLikesDTO> getLikedDataFromRedis();
+
 }

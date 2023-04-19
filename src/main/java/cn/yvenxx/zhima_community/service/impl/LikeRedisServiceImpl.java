@@ -29,6 +29,28 @@ public class LikeRedisServiceImpl implements LikeRedisService {
     private HashOperations<String, String, Object> redisHash;// Redis Hash
 
     @Override
+    public void insertLikeCount(Integer articleId, Integer likeCount) {
+        redisHash.put(RedisKeyUtils.MAP_KEY_USER_LIKED_COUNT, String.valueOf(articleId),likeCount);
+    }
+
+    @Override
+    public void decrementLikedCount(String articleId, int delta) {
+        redisHash.increment(RedisKeyUtils.MAP_KEY_USER_LIKED_COUNT, articleId, -1);
+    }
+
+    @Override
+    public void insertLike(String articleId,String likeUserId,Integer status){
+        String key = RedisKeyUtils.getLikedKey(articleId, likeUserId);
+        // 封装value 喜欢状态 更新时间
+        HashMap<String,Object> map = new HashMap<>();
+        // 点赞状态置为1
+        map.put("status",status);
+        map.put("updateTime", System.currentTimeMillis());
+        redisHash.put(RedisKeyUtils.MAP_KEY_USER_LIKED, key, map);
+    }
+
+
+    @Override
     public Integer getLikeStatus(String articleId, String likeUserId) {
         if (redisHash.hasKey(RedisKeyUtils.MAP_KEY_USER_LIKED,RedisKeyUtils.getLikedKey(articleId,likeUserId))){
             HashMap<String,Object> map = (HashMap<String, Object>) redisHash.get(RedisKeyUtils.MAP_KEY_USER_LIKED,RedisKeyUtils.getLikedKey(articleId,likeUserId));
@@ -155,4 +177,6 @@ public class LikeRedisServiceImpl implements LikeRedisService {
         }
         return list;
     }
+
+
 }

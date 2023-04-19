@@ -7,11 +7,15 @@
     <insert id="insert" keyProperty="aid" useGeneratedKeys="true">
         insert into article
         values(#{aid},#{title},#{description},#{gmtCreate},#{gmtModified},
-               #{category},#{creator},#{viewCount},#{likeCount},#{comment},#{commentCount})
+               #{category},#{creator},#{viewCount},#{likeCount},#{commentCount})
     </insert>
     <update id="update">
         update article set title=#{title},description=#{description},gmt_modified=#{gmtModified},category=#{category},view_count=#{viewCount},
                            like_count=#{likeCount},comment_count=#{commentCount}  where aid=#{aid}
+    </update>
+
+    <update id="updateCount">
+        update article set comment_count=#{param2} where aid=#{param1}
     </update>
 
     <select id="getAllByCategoryArticle" resultType="cn.yvenxx.zhima_community.model.Article">

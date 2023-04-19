@@ -48,6 +48,11 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
+    public int updateCommentCount(Integer blogId, int count) {
+        return articleMapper.updateCount(blogId,count);
+    }
+
+    @Override
     public List<Article> getMixHotArticles() {
         /*
           获取当前热门，如果今日有五条，则用今日的，否则用今日的加上过去的
