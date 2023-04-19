@@ -33,7 +33,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         if (user!=null){
             if (user.getPassword().equals(password)){
                 String token = UUID.randomUUID().toString();
-                user.setToken(token);
                 userMapper.update(user);
                 return token;
             }

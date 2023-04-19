@@ -3,7 +3,6 @@ package cn.yvenxx.zhima_community.service.impl;
 import cn.yvenxx.zhima_community.mapper.CommentMapper;
 import cn.yvenxx.zhima_community.model.Comment;
 import cn.yvenxx.zhima_community.service.CommentService;
-import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,9 +27,13 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public int getCountByBlogId(int blogId) {
-        return commentMapper.getCountByBlogIdAndParentId(blogId);
+    public int getCountByBlogIdAndParentIdIsNull(int blogId) {
+        return commentMapper.getCountByBlogIdAndParentIdIsNull(blogId);
     }
 
+    @Override
+    public int getCountByBlogId(int blogId) {
+        return commentMapper.getCountByBlogId(blogId);
+    }
 
 }

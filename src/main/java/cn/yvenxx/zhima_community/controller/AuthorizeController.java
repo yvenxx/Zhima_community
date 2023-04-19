@@ -73,6 +73,8 @@ public class AuthorizeController {
         if (result!=null){
             return R.fail("此用户已存在，请重试");
         }
+
+        user.setRole("normal");
         if(userService.register(user)){
 //            model.addAttribute("registerInfo","注册成功");
             return R.succ("注册成功，请登录",null);

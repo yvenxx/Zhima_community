@@ -27,6 +27,7 @@ public class HomeController {
         String username = JwtTokenUtil.getUsername(token);
         User user = userService.findByUserName(username);
         if (user!=null){
+            user.setPassword(null);
             return R.succ(user);
         }
         return R.fail("未登录");

@@ -15,7 +15,10 @@ public class UserController {
 
     @RequestMapping("/user/{id}")
     public R articleCreator(@PathVariable("id") int id){
+
         User user = userService.getUserById(id);
+        user.setPassword(null);
+
         return R.succ(user);
     }
 

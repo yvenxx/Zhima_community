@@ -40,11 +40,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .authorizeRequests()
                 // 访问/data需要normal角色
-                .antMatchers("/comment").hasRole("normal")
-                .antMatchers("/publish").hasRole("normal")
-                .antMatchers("/article").hasRole("normal")
-                .antMatchers("/").hasRole("normal")
-                .antMatchers("/index").hasRole("normal")
+                .antMatchers("/comment").hasAnyRole("normal","admin")
+                .antMatchers("/publish").hasAnyRole("normal","admin")
+                .antMatchers("/article/manage/**").hasAnyRole("normal","admin")
+                .antMatchers("/").hasAnyRole("normal","admin")
+                .antMatchers("/index").hasAnyRole("normal","admin")
+
                 // 其余资源任何人都可访问
                 .anyRequest().permitAll()
                 .and()

@@ -6,8 +6,8 @@
 <mapper namespace="cn.yvenxx.zhima_community.mapper.UserMapper">
 
     <insert id="insertUser" useGeneratedKeys="true" keyProperty="id">
-        insert into user(id,role,user_name,password,email,token,gmt_create,gmt_modified)
-        values(#{id,jdbcType=INTEGER},#{role},#{userName},#{password},#{email},#{token},#{gmtCreate},#{gmtModified});
+        insert into user(id,role,user_name,password,email,gmt_create,gmt_modified)
+        values(#{id,jdbcType=INTEGER},#{role},#{userName},#{password},#{email},#{gmtCreate},#{gmtModified});
     </insert>
     <update id="update">
         UPDATE user SET

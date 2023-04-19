@@ -2,7 +2,6 @@ package cn.yvenxx.zhima_community.mapper;
 
 import cn.yvenxx.zhima_community.model.Comment;
 import com.github.pagehelper.Page;
-import com.github.pagehelper.PageInfo;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
@@ -14,5 +13,7 @@ public interface CommentMapper {
 
     int comment(Comment comment);
 
-    int getCountByBlogIdAndParentId(int blogId);
+    int getCountByBlogIdAndParentIdIsNull(int blogId);
+
+    int getCountByBlogId(int blogId);
 }

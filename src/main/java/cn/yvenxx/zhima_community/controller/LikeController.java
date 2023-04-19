@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @Slf4j
-@RequestMapping("article")
+@RequestMapping("/article/manage")
 public class LikeController {
     @Autowired
     private LikeRedisService likeRedisService;
@@ -23,9 +23,11 @@ public class LikeController {
     @PostMapping("like")
     public R likeInfo(String articleId,String userId){
         Integer status = likeRedisService.getLikeStatus(articleId, userId);
+
         if (status==1){
             return R.fail("已经点过赞了");
         }
+
         likeRedisService.saveLikedToRedisAndIncrementCount(articleId,userId);
         return R.succ(null);
     }
@@ -54,6 +56,7 @@ public class LikeController {
 
         //缓存自己对于这个文章的点赞状态
         likeRedisService.insertLike(articleId,userId,userlikes==null?0:userlikes.getStatus());
+
         return R.succ(userlikes==null?0:userlikes.getStatus());
     }
 }

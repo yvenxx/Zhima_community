@@ -12,7 +12,10 @@
     <select id="getCommentByBlogId" resultType="cn.yvenxx.zhima_community.model.Comment">
         select * from `comment` where blog_id = #{blogId}
     </select>
-    <select id="getCountByBlogIdAndParentId" resultType="java.lang.Integer">
+    <select id="getCountByBlogIdAndParentIdIsNull" resultType="java.lang.Integer">
         select count(id) from `comment` where blog_id = #{blogId} and parent_id is null
+    </select>
+    <select id="getCountByBlogId" resultType="java.lang.Integer">
+        select count(id) from `comment` where blog_id = #{blogId}
     </select>
 </mapper>

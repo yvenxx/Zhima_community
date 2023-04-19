@@ -28,6 +28,7 @@ public class CommentController {
     @GetMapping("/comment/{blogid}/{currentPage}")
     public R getComment(@PathVariable("blogid")int blogId,@PathVariable("currentPage") int currentPage){
         PageInfo<Comment> comment = commentService.getCommentByBlogId(currentPage, blogId);
+
         List<Comment> list = comment.getList();
         List<Comment> rootComment = new ArrayList<Comment>();
         //遍历，将一级评论放到rootComment
@@ -45,8 +46,9 @@ public class CommentController {
                     .collect(Collectors.toList()));
         }
 
+
         //设置total
-        int count = commentService.getCountByBlogId(blogId);
+        int count = commentService.getCountByBlogIdAndParentIdIsNull(blogId);
         comment.setTotal(count);
 
         //设置pages
@@ -61,8 +63,11 @@ public class CommentController {
     @PostMapping("/comment")
     public R comment(Comment comment){
         comment.setCreateTime(LocalDateTime.now());
+
         int i = commentService.comment(comment);
+
         int count = commentService.getCountByBlogId(comment.getBlogId());
+
         articleService.updateCommentCount(comment.getBlogId(),count);
 
         if (i==1){
