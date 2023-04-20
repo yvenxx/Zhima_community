@@ -5,16 +5,12 @@ import cn.yvenxx.zhima_community.filter.JWTAuthorizationFilter;
 import cn.yvenxx.zhima_community.filter.JwtAuthenticationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -33,6 +29,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        http.headers().frameOptions().disable();
         // 跨域共享
         http.cors()
                 .and()
@@ -45,6 +42,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/article/manage/**").hasAnyRole("normal","admin")
                 .antMatchers("/").hasAnyRole("normal","admin")
                 .antMatchers("/index").hasAnyRole("normal","admin")
+//                .antMatchers("/admin/**").hasAnyRole("admin")
 
                 // 其余资源任何人都可访问
                 .anyRequest().permitAll()
@@ -61,17 +59,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .exceptionHandling()
                 // 匿名用户访问无权限资源时的异常
                 .authenticationEntryPoint(new JWTAuthenticationEntryPoint());
-    }
-
-    /**
-     * 跨域配置
-     * @return 基于URL的跨域配置信息
-     */
-    @Bean
-    CorsConfigurationSource corsConfigurationSource() {
-        final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        // 注册跨域配置
-        source.registerCorsConfiguration("/**", new CorsConfiguration().applyPermitDefaultValues());
-        return source;
     }
 }

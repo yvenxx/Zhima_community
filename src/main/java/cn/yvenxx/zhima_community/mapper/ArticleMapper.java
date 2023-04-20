@@ -25,4 +25,8 @@ public interface ArticleMapper {
     int update(Article article);
 
     int updateCount(Integer blogId, int count);
+
+    int deleteArticle(int articleId);
+
+    List<Article> getAllArticles();
 }

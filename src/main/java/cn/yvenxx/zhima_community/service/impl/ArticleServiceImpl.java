@@ -53,6 +53,18 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
+    public int deleteArticle(int articleId) {
+        return articleMapper.deleteArticle(articleId);
+    }
+
+    @Override
+    public PageInfo<Article> getAllArticle(int currentPage) {
+        PageHelper.startPage(currentPage,10,"gmt_create desc");
+        PageInfo<Article> list = new PageInfo<>(articleMapper.getAllArticles());
+        return list;
+    }
+
+    @Override
     public List<Article> getMixHotArticles() {
         /*
           获取当前热门，如果今日有五条，则用今日的，否则用今日的加上过去的

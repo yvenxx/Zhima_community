@@ -12,13 +12,14 @@
     <update id="update">
         UPDATE user SET
                         user_name=#{userName},
-                        password=#{password},
+                        role=#{role},
                         email=#{email},
-                        token=#{token},
-                        gmt_create=#{gmtCreate},
                         gmt_modified=#{gmtModified}
         where id = #{id};
     </update>
+    <delete id="deleteUser">
+        DELETE FROM user where id = #{id}
+    </delete>
 
     <select id="getByUserNameUser" resultType="cn.yvenxx.zhima_community.model.User">
         select * from user where user_name = #{username};
@@ -28,6 +29,9 @@
     </select>
     <select id="getUserById" resultType="cn.yvenxx.zhima_community.model.User">
         select * from `user` where id = #{id}
+    </select>
+    <select id="getAllUser" resultType="cn.yvenxx.zhima_community.model.User">
+        select * from user
     </select>
 
 </mapper>

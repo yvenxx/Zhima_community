@@ -3,6 +3,8 @@ package cn.yvenxx.zhima_community.service.impl;
 import cn.yvenxx.zhima_community.mapper.UserMapper;
 import cn.yvenxx.zhima_community.model.User;
 import cn.yvenxx.zhima_community.service.UserService;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,6 +59,24 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public User getUserById(int id) {
         return userMapper.getUserById(id);
+    }
+
+    @Override
+    public PageInfo<User> getAllUser(int currentPage) {
+        PageHelper.startPage(currentPage,20,"gmt_create desc");
+        PageInfo<User> page = new PageInfo<>(userMapper.getAllUser());
+        return page;
+    }
+
+    @Override
+    public int deleteUser(int id) {
+        return userMapper.deleteUser(id);
+    }
+
+    @Override
+    public boolean update(User user) {
+        user.setGmtModified(System.currentTimeMillis());
+        return userMapper.update(user);
     }
 
     public User findUserByToken(String token){

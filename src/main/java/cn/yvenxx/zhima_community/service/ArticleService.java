@@ -19,4 +19,8 @@ public interface ArticleService {
 
 
     int updateCommentCount(Integer blogId, int count);
+
+    int deleteArticle(int articleId);
+
+    PageInfo<Article> getAllArticle(int currentPage);
 }
