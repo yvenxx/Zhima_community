@@ -95,6 +95,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         if (username==null||"".equals(username)){
             throw new RuntimeException("不能为空");
         }
+        log.info(getClass()+"------------"+username);
         User user = userMapper.getByUserNameUser(username);
         if (user==null){
             throw new UsernameNotFoundException("用户不存在");

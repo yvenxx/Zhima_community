@@ -110,7 +110,7 @@ public class UserLikesServiceImpl implements UserLikesService {
 
                     } else if (userLikes.getStatus()== 0) {// 未点赞，则点赞，修改点赞状态和点赞数据+1
                         userLikes.setStatus(1);
-                        likeRedisService.decrementLikedCount(item.getArticleId(), -1);
+                        likeRedisService.decrementLikedCount(item.getArticleId(), +1);
 //                        update(userLikes);
                     }
                     userLikes.setGmtModified(System.currentTimeMillis());

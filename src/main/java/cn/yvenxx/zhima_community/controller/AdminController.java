@@ -1,8 +1,10 @@
 package cn.yvenxx.zhima_community.controller;
 
 import cn.yvenxx.zhima_community.model.Article;
+import cn.yvenxx.zhima_community.model.Comment;
 import cn.yvenxx.zhima_community.model.User;
 import cn.yvenxx.zhima_community.service.ArticleService;
+import cn.yvenxx.zhima_community.service.CommentService;
 import cn.yvenxx.zhima_community.service.UserService;
 import cn.yvenxx.zhima_community.utils.R;
 import com.github.pagehelper.PageInfo;
@@ -17,6 +19,9 @@ public class AdminController {
     UserService userService;
     @Autowired
     ArticleService articleService;
+
+    @Autowired
+    CommentService commentService;
 
     @GetMapping("users/{currentPage}")
     public R getUsers(@PathVariable("currentPage")int currentPage){
@@ -56,5 +61,24 @@ public class AdminController {
     public R getArticles(@PathVariable("currentPage")int currentPage){
         PageInfo<Article> list = articleService.getAllArticle(currentPage);
         return R.succ(list);
+    }
+
+    @GetMapping("comments/{currentPage}")
+    public R getComments(@PathVariable("currentPage") int currentPage){
+        PageInfo<Comment> list = commentService.getAllComments(currentPage);
+        return R.succ(list);
+    }
+
+    /**
+     * 删除的时候，要将他下面的子评论，或者说回复他的评论删除
+     * @param id
+     * @return
+     */
+    @DeleteMapping("comment/{id}")
+    public R deleteComment(@PathVariable("id")int id){
+        if(commentService.deleteComment(id)>=1){
+            return R.succ(null);
+        }
+        return R.fail("删除失败");
     }
 }

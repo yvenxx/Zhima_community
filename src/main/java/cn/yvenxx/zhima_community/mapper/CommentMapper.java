@@ -16,4 +16,10 @@ public interface CommentMapper {
     int getCountByBlogIdAndParentIdIsNull(int blogId);
 
     int getCountByBlogId(int blogId);
+
+    Page<Comment> getAllComments();
+
+    int deleteCommentById(int id);
+
+    int deleteCommentByBlogId(int blogId);
 }

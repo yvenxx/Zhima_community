@@ -11,4 +11,8 @@ public interface CommentService {
     int getCountByBlogIdAndParentIdIsNull(int blogId);
 
     int getCountByBlogId(int blogId);
+
+    PageInfo<Comment> getAllComments(int currentPage);
+
+    int deleteComment(int id);
 }

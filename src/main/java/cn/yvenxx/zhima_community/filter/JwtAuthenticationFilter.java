@@ -91,6 +91,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             returnData="未知异常";
         }
 
+
         // 处理编码方式 防止中文乱码
         response.setContentType("text/json;charset=utf-8");
         // 将反馈塞到HttpServletResponse中返回给前台

@@ -36,4 +36,16 @@ public class CommentServiceImpl implements CommentService {
         return commentMapper.getCountByBlogId(blogId);
     }
 
+    @Override
+    public PageInfo<Comment> getAllComments(int currentPage) {
+        PageHelper.startPage(currentPage,10,"create_time desc");
+        PageInfo<Comment> commentPageInfo = new PageInfo<Comment>(commentMapper.getAllComments());
+        return commentPageInfo;
+    }
+
+    @Override
+    public int deleteComment(int id) {
+        return commentMapper.deleteCommentById(id);
+    }
+
 }

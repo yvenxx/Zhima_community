@@ -42,7 +42,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/article/manage/**").hasAnyRole("normal","admin")
                 .antMatchers("/").hasAnyRole("normal","admin")
                 .antMatchers("/index").hasAnyRole("normal","admin")
-//                .antMatchers("/admin/**").hasAnyRole("admin")
+                .antMatchers("/admin/**").hasAnyRole("admin")
 
                 // 其余资源任何人都可访问
                 .anyRequest().permitAll()

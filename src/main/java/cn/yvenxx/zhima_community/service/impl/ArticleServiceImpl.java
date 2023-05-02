@@ -1,5 +1,6 @@
 package cn.yvenxx.zhima_community.service.impl;
 
+import cn.yvenxx.zhima_community.mapper.CommentMapper;
 import cn.yvenxx.zhima_community.utils.DateUtil;
 import cn.yvenxx.zhima_community.mapper.ArticleMapper;
 import cn.yvenxx.zhima_community.model.Article;
@@ -17,8 +18,12 @@ public class ArticleServiceImpl implements ArticleService {
     @Autowired
     ArticleMapper articleMapper;
 
+    @Autowired
+    CommentMapper commentMapper;
+
     @Override
     public void publishAtricle(Article article) {
+
         articleMapper.insert(article);
     }
 
@@ -54,6 +59,7 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public int deleteArticle(int articleId) {
+        commentMapper.deleteCommentByBlogId(articleId);
         return articleMapper.deleteArticle(articleId);
     }
 

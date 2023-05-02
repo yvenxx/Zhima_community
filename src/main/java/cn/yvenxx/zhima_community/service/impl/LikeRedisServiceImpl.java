@@ -35,7 +35,7 @@ public class LikeRedisServiceImpl implements LikeRedisService {
 
     @Override
     public void decrementLikedCount(String articleId, int delta) {
-        redisHash.increment(RedisKeyUtils.MAP_KEY_USER_LIKED_COUNT, articleId, -1);
+        redisHash.increment(RedisKeyUtils.MAP_KEY_USER_LIKED_COUNT, articleId,delta);
     }
 
     @Override

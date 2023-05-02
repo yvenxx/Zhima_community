@@ -8,6 +8,12 @@
         insert into comment(username,user_id,content,create_time,blog_id,parent_id,target)
         values (#{username},#{userId},#{content},#{createTime},#{blogId},#{parentId},#{target})
     </insert>
+    <delete id="deleteCommentById">
+        delete from comment where id = #{id} or parent_id = #{id}
+    </delete>
+    <delete id="deleteCommentByBlogId">
+        delete from comment where blog_id = #{id}
+    </delete>
 
     <select id="getCommentByBlogId" resultType="cn.yvenxx.zhima_community.model.Comment">
         select * from `comment` where blog_id = #{blogId}
@@ -17,5 +23,8 @@
     </select>
     <select id="getCountByBlogId" resultType="java.lang.Integer">
         select count(id) from `comment` where blog_id = #{blogId}
+    </select>
+    <select id="getAllComments" resultType="cn.yvenxx.zhima_community.model.Comment">
+        select * from comment
     </select>
 </mapper>

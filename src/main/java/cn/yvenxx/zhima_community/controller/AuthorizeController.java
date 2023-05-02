@@ -45,20 +45,17 @@ public class AuthorizeController {
         return "redirect:/login";
     }
 
-    @RequestMapping("/doLogin")
+    @PostMapping("/doLogin")
     @ResponseBody
     public R loginAuthorize(@RequestParam("username") String username,
                                  @RequestParam("password") String password,
                                  HttpServletResponse response,
                                  HttpServletRequest request){
 
-        //把token放到cookie，如果token不为空就是登录成功
         String token = userService.doLogin(username,password);
         if(token!=null){
-//            response.addCookie(new Cookie("token",token));
             return R.succ("登录成功",new Cookie("token",token));
         }
-//        request.setAttribute("info","账号密码错误");
         return R.fail("登录失败，账号密码错误");
     }
     @ResponseBody
