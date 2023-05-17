@@ -1,10 +1,11 @@
 package cn.yvenxx.zhima_community.service.impl;
 
-import cn.yvenxx.zhima_community.mapper.CommentMapper;
-import cn.yvenxx.zhima_community.utils.DateUtil;
 import cn.yvenxx.zhima_community.mapper.ArticleMapper;
+import cn.yvenxx.zhima_community.mapper.CommentMapper;
 import cn.yvenxx.zhima_community.model.Article;
+import cn.yvenxx.zhima_community.repository.ESArticleRepository;
 import cn.yvenxx.zhima_community.service.ArticleService;
+import cn.yvenxx.zhima_community.utils.DateUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,9 +22,12 @@ public class ArticleServiceImpl implements ArticleService {
     @Autowired
     CommentMapper commentMapper;
 
+    @Autowired
+    ESArticleRepository esArticleRepository;
+
+
     @Override
     public void publishAtricle(Article article) {
-
         articleMapper.insert(article);
     }
 

@@ -16,8 +16,6 @@ public interface ArticleService {
     PageInfo<Article> getRecommendArticlesByCategory(String category, int currentPage);
 
     Article getArticleDetail(int id);
-
-
     int updateCommentCount(Integer blogId, int count);
 
     int deleteArticle(int articleId);

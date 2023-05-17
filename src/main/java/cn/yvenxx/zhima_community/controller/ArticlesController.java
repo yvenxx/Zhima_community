@@ -1,15 +1,17 @@
 package cn.yvenxx.zhima_community.controller;
 
-import cn.yvenxx.zhima_community.service.LikeRedisService;
-import cn.yvenxx.zhima_community.utils.R;
 import cn.yvenxx.zhima_community.model.Article;
+import cn.yvenxx.zhima_community.model.ESArticle;
+import cn.yvenxx.zhima_community.repository.ESArticleRepository;
+import cn.yvenxx.zhima_community.service.LikeRedisService;
 import cn.yvenxx.zhima_community.service.impl.ArticleServiceImpl;
+import cn.yvenxx.zhima_community.utils.R;
 import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @Slf4j
@@ -18,6 +20,9 @@ public class ArticlesController {
     ArticleServiceImpl articleService;
     @Autowired
     LikeRedisService redisService;
+
+    @Autowired
+    ESArticleRepository repository;
 
     @RequestMapping("/article/{id}")
     public R articleDetail(@PathVariable("id")int id){
@@ -49,5 +54,15 @@ public class ArticlesController {
     public R hotArticles(){
         return R.succ(articleService.getMixHotArticles());
     }
+
+    @GetMapping("/_search")
+    public R searchArticle(String title){
+        List<ESArticle> list = repository.queryESArticleByTitle(title);
+        if (!list.isEmpty()){
+            return R.succ(list);
+        }
+        return R.fail("error");
+    }
+
 
 }
