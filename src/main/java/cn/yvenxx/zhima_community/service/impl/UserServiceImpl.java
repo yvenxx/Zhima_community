@@ -79,6 +79,12 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return userMapper.update(user);
     }
 
+    @Override
+    public boolean updatePassword(int id,String oldpwd, String password) {
+
+        return userMapper.updatePassword(id,oldpwd,password);
+    }
+
     public User findUserByToken(String token){
         /**
          * 登录成功后，通过cookie中的token来返回用户数据，存储到session中

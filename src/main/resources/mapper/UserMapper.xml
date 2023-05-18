@@ -10,12 +10,25 @@
         values(#{id,jdbcType=INTEGER},#{role},#{userName},#{password},#{email},#{gmtCreate},#{gmtModified});
     </insert>
     <update id="update">
-        UPDATE user SET
-                        user_name=#{userName},
-                        role=#{role},
-                        email=#{email},
-                        gmt_modified=#{gmtModified}
-        where id = #{id};
+        UPDATE user
+            <set>
+                <if test="userName != null">
+                    user_name=#{userName},
+                </if>
+                <if test="role != null">
+                    role=#{role},
+                </if>
+                <if test="email != null">
+                    email=#{email},
+                </if>
+                <if test="gmtModified != null">
+                    gmt_modified=#{gmtModified}
+                </if>
+            </set>
+        where id = #{id}
+    </update>
+    <update id="updatePassword">
+        update user set password=#{password} where password = #{oldpwd} and id = #{id}
     </update>
     <delete id="deleteUser">
         DELETE FROM user where id = #{id}

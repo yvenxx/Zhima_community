@@ -64,5 +64,10 @@ public class ArticlesController {
         return R.fail("error");
     }
 
+    @GetMapping("/user/{id}/articles/{page}")
+    public R getArticlesByUserId(@PathVariable("id") int id,@PathVariable("page")int currentPage){
+        PageInfo<Article> articleByUserId = articleService.getArticleByUserId(currentPage, id);
+        return R.succ(articleByUserId);
+    }
 
 }

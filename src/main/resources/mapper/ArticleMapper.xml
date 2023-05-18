@@ -17,8 +17,11 @@
     <update id="updateCount">
         update article set comment_count=#{param2} where aid=#{param1}
     </update>
-    <delete id="deleteArticle">
+    <delete id="adminDeleteArticle">
         delete from article where aid = #{id}
+    </delete>
+    <delete id="deleteArticle">
+        delete from article where creator=#{uid} and aid = #{aid}
     </delete>
 
     <select id="getAllByCategoryArticle" resultType="cn.yvenxx.zhima_community.model.Article">
@@ -45,6 +48,9 @@
     </select>
     <select id="getAllArticles" resultType="cn.yvenxx.zhima_community.model.Article">
         select * from article
+    </select>
+    <select id="getArticleByUserId" resultType="cn.yvenxx.zhima_community.model.Article">
+        select * from `article` where creator = #{id}
     </select>
 
 </mapper>

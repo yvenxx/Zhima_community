@@ -26,7 +26,11 @@ public interface ArticleMapper {
 
     int updateCount(Integer blogId, int count);
 
-    int deleteArticle(int articleId);
+    int adminDeleteArticle(int articleId);
+
+    int deleteArticle(int uid,int aid);
 
     List<Article> getAllArticles();
+
+    Page<Article> getArticleByUserId(int id);
 }

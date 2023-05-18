@@ -19,4 +19,6 @@ public interface UserMapper{
     Page<User> getAllUser();
 
     int deleteUser(int id);
+
+    boolean updatePassword(int id,String oldpwd, String password);
 }

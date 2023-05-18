@@ -6,6 +6,7 @@ import com.github.pagehelper.PageInfo;
 import java.util.List;
 
 public interface ArticleService {
+    PageInfo<Article> getArticleByUserId(int currentPage,int id);
 
     void publishAtricle(Article article);
 
@@ -18,7 +19,9 @@ public interface ArticleService {
     Article getArticleDetail(int id);
     int updateCommentCount(Integer blogId, int count);
 
-    int deleteArticle(int articleId);
+    int deleteArticle(int uid,int aid);
+
+    int adminDeleteArticle(int articleId);
 
     PageInfo<Article> getAllArticle(int currentPage);
 }

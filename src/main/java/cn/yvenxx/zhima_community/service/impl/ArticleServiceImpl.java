@@ -27,6 +27,13 @@ public class ArticleServiceImpl implements ArticleService {
 
 
     @Override
+    public PageInfo<Article> getArticleByUserId(int currentPage, int id) {
+        PageHelper.startPage(currentPage,10,"gmt_create desc");
+        PageInfo<Article> list = new PageInfo<>(articleMapper.getArticleByUserId(id));
+        return list;
+    }
+
+    @Override
     public void publishAtricle(Article article) {
         articleMapper.insert(article);
     }
@@ -62,9 +69,15 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public int deleteArticle(int articleId) {
+    public int deleteArticle(int uid,int aid) {
+        commentMapper.deleteCommentByBlogId(aid);
+        return articleMapper.deleteArticle(uid,aid);
+    }
+
+    @Override
+    public int adminDeleteArticle(int articleId) {
         commentMapper.deleteCommentByBlogId(articleId);
-        return articleMapper.deleteArticle(articleId);
+        return articleMapper.adminDeleteArticle(articleId);
     }
 
     @Override

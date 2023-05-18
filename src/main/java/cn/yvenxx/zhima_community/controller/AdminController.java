@@ -50,7 +50,7 @@ public class AdminController {
 
     @DeleteMapping("article/{id}")
     public R deleteArticle(@PathVariable("id")int articleId){
-        int i = articleService.deleteArticle(articleId);
+        int i = articleService.adminDeleteArticle(articleId);
         if (i==1){
             return R.succ(null);
         }
